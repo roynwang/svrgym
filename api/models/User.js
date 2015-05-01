@@ -23,10 +23,11 @@ module.exports = {
 	},
   },
   afterCreate: function(item, cb){
-	Timeline.create({alias:item.alias, recent:["I've been created"]})
+	Timeline.create({alias:item.alias, recent:[], history:[]})
 		.exec(function(err,tt){
 			if(err)
 				return cb(err);
+			console.log("created " + item.alias);
 			cb();
 		});
   }

@@ -3,6 +3,9 @@ module.exports = {
 		text: {
 			type: 'string',
 			required: 'true'
+		},
+		author: {
+			model: 'timeline',
 		}
 	}
 }

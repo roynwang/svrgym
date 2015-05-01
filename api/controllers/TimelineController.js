@@ -7,14 +7,17 @@
 
 module.exports = {
 	newtwit: function(req, res){
-				 var savetorecent = function(tw, cb){
-						return Twit.create(tw)
-							   .exec(cb);
-				 }
-				 var savetohistory = function(timeline, tw){
-					timeline.history.push(tw.id);
-					timeline.save();
-				 }
+				 var savetorecent = function(user, tw){
+						user.recent.push(tw);
+						user.save(function(err, msg){
+							if(err){
+								res.json({stat:"failed", error:err});
+							}
+							else{
+								res.json({stat:'success', tw:tw});
+							}
+						});
+				 };
 				 usr = req.param('user');
 				 Timeline.findOne({alias:usr})
 					 .exec(function(err, user){
@@ -27,22 +30,13 @@ module.exports = {
 						 else {
 							 //push the twit to db
 							 //
-							Twit.create({text:req.param('text')})
-								.exec(function(err, twit){
+							Twit.create({text:req.param('text'), author: user.id})
+								.exec(function(err,twit){
 									if(err){
 										res.json({stat:"failed", error:err});
 									}
-									else
-									{
-										user.recent.push(twit);
-										user.save(function(err, msg){
-											if(err){
-												res.json({stat:"failed", error:err});
-											}
-											else{
-												res.json({stat:"passed", added:twit});
-											}
-										});
+									else{
+										savetorecent(user, twit);
 									}
 								});
 						}
@@ -50,7 +44,8 @@ module.exports = {
 			 },
 	getrecent: function(req, res){
 				   usr = req.param('user');
-				   Timeline.findOne({alias:usr})
+				   Timeline.find({alias:usr})
+					   .populate('history')
 					   .exec(function(err, user){
 						   if(err){
 							   res.json({error:err});
@@ -59,7 +54,7 @@ module.exports = {
 							   res.notFound();	
 						   }
 						   else {
-							   res.json(user.recent);
+							   res.json(user);
 						   }
 					   });
 			   }

@@ -15,7 +15,8 @@ module.exports = {
 			type:  'array'
 		},
 		history:{
-			collection: 'twit'
+			collection: 'twit',
+			via: 'author'
 		}
   }
 };
