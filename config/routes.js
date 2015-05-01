@@ -32,9 +32,14 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+
+  'GET /timeline/:user': 'TimelineController.getrecent',
+  'POST /timeline/:user': 'TimelineController.newtwit',
+
   '/': {
     view: 'homepage'
   }
+  
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +50,6 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
 
 };
