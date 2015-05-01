@@ -30,13 +30,13 @@ module.exports = {
 						 else {
 							 //push the twit to db
 							 //
-							Twit.create({text:req.param('text'), author: user.id})
+							Twit.create({text:req.param('text'), author: user.alias})
 								.exec(function(err,twit){
 									if(err){
 										res.json({stat:"failed", error:err});
 									}
 									else{
-										savetorecent(user, twit);
+										res.json({stat:'success', tw:twit});
 									}
 								});
 						}
@@ -44,8 +44,7 @@ module.exports = {
 			 },
 	getrecent: function(req, res){
 				   usr = req.param('user');
-				   Timeline.find({alias:usr})
-					   .populate('history')
+				   Timeline.findOne({alias:usr})
 					   .exec(function(err, user){
 						   if(err){
 							   res.json({error:err});

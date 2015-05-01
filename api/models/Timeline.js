@@ -8,7 +8,7 @@
 module.exports = {
   attributes: {
 		alias: {
-			model: 'user'
+			model: 'user',
 		},
 		recent:{
 			//collection: 'string',
@@ -16,7 +16,7 @@ module.exports = {
 		},
 		history:{
 			collection: 'twit',
-			via: 'author'
+			via: 'rel'
 		}
   }
 };

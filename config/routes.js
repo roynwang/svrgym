@@ -35,6 +35,7 @@ module.exports.routes = {
 
   'GET /timeline/:user': 'TimelineController.getrecent',
   'POST /timeline/:user': 'TimelineController.newtwit',
+  'POST /user/:user/follow': 'UserController.follow',
 
   '/': {
     view: 'homepage'
