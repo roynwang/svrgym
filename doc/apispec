@@ -1,0 +1,96 @@
+svrgym api
+1.创建用户
+POST /user
+  {
+    alias: string
+    pwd: string
+  }
+
+返回值：
+{
+    "alias": "demo",
+    "pwd": "$2a$10$1vLywcJon0qDGxywIOzqaeGHli/EZ4Sv5qeoCdk7hA/2p0MX.qgN2",
+    "createdAt": "2015-05-02T08:14:38.722Z",
+    "updatedAt": "2015-05-02T08:14:38.722Z",
+    "id": "5544876e59d414c108e1426a"
+}
+2.登陆
+
+POST /user/login
+
+{
+    username: string
+    password: string
+}
+
+返回值
+{
+    "success": true,
+    "user": {
+        "alias": "xdb04",
+        "iat": 1430554080,
+        "exp": 1430640480
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGlhcyI6InhkYjA0IiwiaWF0IjoxNDMwNTU0MDgwLCJleHAiOjE0MzA2NDA0ODB9.CBNZKUYlDupWSOGUbYoiUqbadB41W0FArn5kdoUFqdQ"
+}
+
+
+3. 发布消息
+
+POST /timeline 
+ Header:
+ 	Authorization: Bearer  {token}
+ 
+ Body:
+ {
+    text: string
+ }
+
+ 返回值：
+ {
+    "stat": "success",
+    "tw": {
+        "text": "hello",
+        "author": "xdb04",
+        "createdAt": "2015-05-02T08:13:48.070Z",
+        "updatedAt": "2015-05-02T08:13:48.070Z",
+        "id": "5544873c59d414c108e14268"
+    }
+}
+
+4. 获取历史发布
+
+GET /timeline
+Header:
+ 	Authorization: Bearer  {token}
+
+返回值：
+[
+    {
+        "text": "hello",
+        "author": "xdb04",
+        "createdAt": "2015-05-02T07:53:47.761Z",
+        "updatedAt": "2015-05-02T07:53:47.761Z",
+        "id": "5544828ba65990b308767d17"
+    }
+]
+
+5.关注别人
+POST /follow 
+ Header:
+ 	Authorization: Bearer  {token}
+ 
+ Body:
+ {
+    follow: string //关注的人的用户名
+ }
+
+返回值
+{
+    "alias": "xdb02",
+    "pwd": "ccc",
+    "following": [],
+    "createdAt": "2015-05-01T14:59:34.307Z",
+    "updatedAt": "2015-05-01T15:05:00.392Z",
+    "id": "554394d6b0fc16b80412acc7"
+}

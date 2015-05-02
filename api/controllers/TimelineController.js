@@ -7,6 +7,7 @@
 
 module.exports = {
 	newtwit: function(req, res){
+				 usr = req.user;
 				 var savetorecent = function(user, tw){
 						user.recent.push(tw);
 						user.save(function(err, msg){
@@ -18,8 +19,7 @@ module.exports = {
 							}
 						});
 				 };
-				 usr = req.param('user');
-				 Timeline.findOne({alias:usr})
+				 Timeline.findOne({alias:usr.alias})
 					 .exec(function(err, user){
 						 if(err){
 							 res.json({error:err});
@@ -43,8 +43,9 @@ module.exports = {
 					 });
 			 },
 	getrecent: function(req, res){
-				   usr = req.param('user');
-				   Timeline.findOne({alias:usr})
+				   usr = req.user;
+				   Timeline.findOne({alias:usr.alias})
+					   .populate('history')
 					   .exec(function(err, user){
 						   if(err){
 							   res.json({error:err});
@@ -53,7 +54,7 @@ module.exports = {
 							   res.notFound();	
 						   }
 						   else {
-							   res.json(user);
+							   res.json(user.history);
 						   }
 					   });
 			   }

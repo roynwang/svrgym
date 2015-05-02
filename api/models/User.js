@@ -21,14 +21,14 @@ module.exports = {
 		collection: 'user',
 		via: 'alias'
 	},
-  },
-  toJSON: function() {
+	toJSON: function() {
       var obj = this.toObject();
+	  console.log("...............toJSON............");
       delete obj.pwd;
-	  delete obj.createAt;
-	  delete obj.updateAt;
       return obj;
+   }
   },
+
   beforeCreate: function(values, next) {
 
 	values['follower'] = [];
