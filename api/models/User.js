@@ -4,6 +4,7 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
+var bcrypt = require('bcrypt');
 
 module.exports = {
   attributes: {
@@ -21,10 +22,38 @@ module.exports = {
 		via: 'alias'
 	},
   },
-  beforeCreate: function(item, cb){
-	item['follower'] = [];
-	item['following'] = [];
-	cb();
+  toJSON: function() {
+      var obj = this.toObject();
+      delete obj.pwd;
+	  delete obj.createAt;
+	  delete obj.updateAt;
+      return obj;
+  },
+  beforeCreate: function(values, next) {
+
+	values['follower'] = [];
+	//values['following'] = [];
+    bcrypt.genSalt(10, function(err, salt) {
+      if (err) return next(err);
+      bcrypt.hash(values.pwd, salt, function(err, hash) {
+        if (err) return next(err);
+
+        values.pwd = hash;
+        next();
+      });
+    });
+  },
+
+  validPassword: function(password, user, cb) {
+    bcrypt.compare(password, user.pwd, function(err, match) {
+      if (err) cb(err);
+
+      if (match) {
+        cb(null, true);
+      } else {
+        cb(err);
+      }
+    });
   },
   afterCreate: function(item, cb){
 		var inittimeline = function() {
