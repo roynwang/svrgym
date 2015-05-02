@@ -43,8 +43,14 @@ module.exports = {
 		var tar = req.param("follow");
 		console.log(usr + " follow " + tar);
 		User.findOne(tar).exec(function(err, tuser){
+			if(err){
+				res.json({stat:'failed', message: err});
+			}
+			if(undefined == tuser){
+				res.json({stat:'failed', message: 'cannot find the user: ' + tar});
+			}
+			else{
 			tuser.follower.add(usr);
-			console.log("save follower ... " + JSON.stringify(tuser.toJSON()));
 			tuser.save(function(err, msg){
 				if(err){
 					res.json({stat:"add follower failed", error:err});
@@ -53,6 +59,7 @@ module.exports = {
 					res.send({stat:"follow success", data: tuser.toJSON()});
 				}
 			});
+			}
 		});
 	}
 };
