@@ -94,3 +94,23 @@ POST /follow
     "updatedAt": "2015-05-01T15:05:00.392Z",
     "id": "554394d6b0fc16b80412acc7"
 }
+
+6.查询附近的健身房：
+POST /gym/nearby
+Body:
+{
+   longitudue: float,
+   latitude: float
+}
+
+返回值：
+[
+  {
+    "width": 60,
+    "height": 49,
+    "longitude": 116.431893,
+    "latitude": 39.992704,
+    "title": "浩沙健身会所(惠东店)",
+    "content": "renyuantest"
+  }
+]
