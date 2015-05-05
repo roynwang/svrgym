@@ -26,14 +26,23 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': "hasToken",
+  //'*': "hasToken",
   UserController: {
+	"find":false,
 	"create": true,
 	"login": true
   },
   GymController: {
+	"findOne":true,
+	"find": false,
 	"nearby": true,
 	"create": true
+  },
+  CoachController: {
+	"*": true
+  },
+  CourseController: {
+	"*": true
   }
 
 

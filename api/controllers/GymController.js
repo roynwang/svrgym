@@ -28,7 +28,7 @@ module.exports = {
                     gymitem['longitude'] = item.location[0];
                     gymitem['latitude'] = item.location[1];
                     gymitem['title'] = item.title;
-                    gymitem['content'] = "renyuantest";
+                    gymitem['content'] = "价格:" + item.price;
                     gymlist.push(gymitem);
                 });
                 res.json(gymlist);
