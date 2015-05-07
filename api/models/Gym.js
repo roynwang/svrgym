@@ -19,9 +19,16 @@ module.exports = {
             type: 'integer',
             defaultsTo: 0
         },
+		pics: {
+			//type: 'string',
+			//url: true,
+			array: true,
+			defaultsTo: []
+		},
 		coaches: {
 			collection: 'coach',
-			via: 'id'
+			via: 'id',
+			defaultsTo: []
 		}
     }
 };

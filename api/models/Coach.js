@@ -21,24 +21,44 @@ module.exports = {
             defautsTo: "DESC NOT IMPLEMENT"
         },
         pic: {
-            type: 'string',
-            url: true,
             array: true,
             defautsTo: []
         },
         badge: {
-            type: 'string',
             array: true,
             defaultsTo: []
         },
         courses: {
             collection: 'course',
             via: 'id',
-			defaultsTo: []
+            defaultsTo: []
         },
         gym: {
             model: 'gym',
-            via: 'id'
+            via: 'id',
+            required: true
         }
+    },
+    afterCreate: function(values, next) {
+        Gym.findOne(values['gym']).exec(function(err, gym) {
+            if (err) {
+                next(err);
+            }
+            if (!gym) {
+                next("cannot find the gym " + values['gym']);
+            } else {
+                if (gym.coaches == undefined) {
+                    gym.coaches = [];
+                }
+                gym.coaches.add(values['id']);
+                gym.save(function(err, msg) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        next()
+                    }
+                });
+            }
+        });
     }
-};
+}

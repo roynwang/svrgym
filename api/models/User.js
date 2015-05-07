@@ -30,7 +30,6 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
-
 	values['follower'] = [];
 	//values['following'] = [];
     bcrypt.genSalt(10, function(err, salt) {
