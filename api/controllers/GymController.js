@@ -40,6 +40,7 @@ module.exports = {
 
                             gymitem['latitude'] = item.location[1];
                             gymitem['title'] = item.title;
+							gymitem['address'] = item.address;
 
                             //fake
                             gymitem['gymid'] = item.gymid;
