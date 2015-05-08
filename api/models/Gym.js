@@ -27,7 +27,6 @@ module.exports = {
 		},
 		coaches: {
 			collection: 'coach',
-			via: 'id',
 			defaultsTo: []
 		}
     }

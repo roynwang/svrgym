@@ -8,7 +8,9 @@
 module.exports = {
   attributes: {
 		alias: {
-			model: 'user',
+				   type:'string',
+				   required: true,
+				   primaryKey: true
 		},
 		recent:{
 			//collection: 'string',

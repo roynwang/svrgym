@@ -7,6 +7,11 @@
 
 module.exports = {
     attributes: {
+		alias: {
+			type: 'string',
+			required: true,
+			primaryKey: true
+		},
         name: {
             type: 'string',
             required: true
@@ -50,7 +55,7 @@ module.exports = {
                 if (gym.coaches == undefined) {
                     gym.coaches = [];
                 }
-                gym.coaches.add(values['id']);
+                gym.coaches.add(values['alias']);
                 gym.save(function(err, msg) {
                     if (err) {
                         next(err);
