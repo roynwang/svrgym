@@ -33,12 +33,13 @@ module.exports.routes = {
   ***************************************************************************/
 
 
-  'GET /timeline': 'TimelineController.getrecent',
-  'POST /timeline': 'TimelineController.newtwit',
+
+  'GET /timeline/:id/:page': 'TimelineController.getrecent',
+  'POST /timeline/:id': 'TimelineController.newtwit',
   'POST /follow': 'UserController.follow',
 
-  '/': {
-    view: 'homepage'
+  '/test':{
+	view: 'test'
   }
   
 

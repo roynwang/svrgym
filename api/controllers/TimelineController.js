@@ -7,7 +7,9 @@
 
 module.exports = {
     newtwit: function(req, res) {
-        usr = req.user;
+        //usr = req.user;
+		var alias = req.param('id');
+		console.log("createing tw for " + alias);
         var savetorecent = function(user, tw) {
             user.recent.push(tw);
             user.save(function(err, msg) {
@@ -25,7 +27,7 @@ module.exports = {
             });
         };
         Timeline.findOne({
-                alias: usr.alias
+                alias: alias
             })
             .exec(function(err, user) {
                 if (err) {
@@ -36,6 +38,7 @@ module.exports = {
                 if (user === undefined) {
                     res.notFound();
                 } else {
+					
                     //push the twit to db
                     //
                     Twit.create({
@@ -60,10 +63,17 @@ module.exports = {
     },
     getrecent: function(req, res) {
         usr = req.user;
+		alias = req.param('id');
+		page = req.param('page');
+		var timequery = 
         Timeline.findOne({
-                alias: usr.alias
-            })
-            .populate('history')
+                alias: alias
+            });
+		if(page == 0){
+			res.json(timequery.recent);
+		}
+		else{
+            timequery.populate('history')
             .exec(function(err, user) {
                 if (err) {
                     res.json({
@@ -76,5 +86,6 @@ module.exports = {
                     res.json(user.history);
                 }
             });
+		}
     }
 };

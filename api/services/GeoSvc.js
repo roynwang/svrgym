@@ -2,7 +2,7 @@ var request = require("request");
 var ak = 'xcXyK7eUjimfC4f7fQucAZEo';
 var mapurl = "http://api.map.baidu.com/geosearch/v3/nearby";
 var geotable_id = "102715";
-var radius = "5000";
+var radius = "20000";
 
 module.exports = {
 	getnearby: function(lon,lat,success, fail){

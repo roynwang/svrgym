@@ -1,0 +1,19 @@
+<ion-view view-title="附近">
+    <ion-nav-bar>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-icon" ng-class="mapmode?'ion-ios-list-outline':'ion-ios-location-outline'"
+            ng-click="toggleDisplayMode()"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content>
+        <baidu-map options="mapOptions" style="display: block; height:inherit" points='gymlist'
+        center='curloc' markerclick='markerclick' ng-show="mapmode"></baidu-map>
+        <div class="list card card-info" ng-hide="mapmode">
+            <div class="item item-avatar" ng-repeat="gym in gymlist" ng-click="markerclickaction(gym)">
+                <h2>{{gym.title}}</h2>
+                <p>{{gym.price}}</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

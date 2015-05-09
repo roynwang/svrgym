@@ -1,0 +1,52 @@
+angular.module('starter.controllers', ["baiduMap", 'geolocation'])
+
+.controller('DashCtrl', function($scope) {
+    $scope.updates = [{
+        avator: "http://ionicframework.com/img/docs/mcfly.jpg",
+        img: "http://ionicframework.com/img/docs/delorean.jpg",
+        description: "hahahaha"
+    }];
+})
+
+.controller('ChatsCtrl', function($scope, Chats) {
+    $scope.chats = Chats.all();
+    $scope.remove = function(chat) {
+        Chats.remove(chat);
+    }
+})
+
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('AccountCtrl', ['$scope', '$http', 'geolocation',
+    function($scope, $http, geolocation) {
+        geolocation.getLocation().then(function(data) {
+            var url = 'http://localhost:1337/gym/nearby';
+            var longitude = 116.43183;
+            var latitude = 39.99274;
+            alert("!!!");
+            //var latitude  = data.coords.latitude;
+            //var longitude = data.coords.longitude;
+            $scope.gymlist = [];
+            $http.post(url, {
+                    longitude: longitude,
+                    latitude: latitude
+                })
+                .success(function(data, status) {
+                    $scope.gymlist = data;
+                })
+                .error(function(data, status) {});
+
+            $scope.mapOptions = {
+                center: {
+                    longitude: longitude,
+                    latitude: latitude
+                },
+                zoom: 17,
+                city: 'ShangHai',
+                markers: []
+            };
+        });
+    }
+]);
