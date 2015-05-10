@@ -68,11 +68,13 @@ angular.module('starter.services', [])
                         $rootScope.nextrefresh = now + 60;
                         var geolocation = new BMap.Geolocation();
                         geolocation.getCurrentPosition(function(data) {
+								/*
                                 curloc = {
                                     latitude: data.point.lat,
                                     longitude: data.point.lng
                                 };
-								//curloc = {longitude: 116.287709, latitude: 40.0376};
+								*/
+								curloc = {longitude: 116.287709, latitude: 40.0376};
                                 alert(JSON.stringify(curloc));
                                 cb(curloc);
                                 //update nextrefresh
