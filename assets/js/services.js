@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
     .run(function($rootScope) {
-        $rootScope.host = "http://192.168.1.120:1337/";
+        $rootScope.host = "/";
         $rootScope.nextRefresh = undefined;
         $rootScope.gym = undefined;
     })
