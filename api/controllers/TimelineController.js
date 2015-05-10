@@ -9,9 +9,8 @@ module.exports = {
     newtwit: function(req, res) {
         //usr = req.user;
 		var alias = req.param('id');
-		console.log("createing tw for " + alias);
         var savetorecent = function(user, tw) {
-            user.recent.push(tw);
+            user.recent.unshift(tw);
             user.save(function(err, msg) {
                 if (err) {
                     res.json({
@@ -41,9 +40,17 @@ module.exports = {
 					
                     //push the twit to db
                     //
+					var imgs = req.param("imgs");
+					if(imgs){
+						imgs = JSON.parse(imgs);
+					}
+					else{
+						imgs = [];
+					}
                     Twit.create({
                             text: req.param('text'),
-                            author: user.alias
+                            author: user.alias,
+							imgs: imgs
                         })
                         .exec(function(err, twit) {
                             if (err) {

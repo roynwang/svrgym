@@ -1,9 +1,9 @@
 angular.module('starter.services', [])
-	.run(function($rootScope){
-		$rootScope.host = "http://192.168.1.120:1337/";
-		$rootScope.nextRefresh = undefined;
-		$rootScope.gym = undefined;
-	})
+    .run(function($rootScope) {
+        $rootScope.host = "http://192.168.1.120:1337/";
+        $rootScope.nextRefresh = undefined;
+        $rootScope.gym = undefined;
+    })
     .factory('ResourceProvider', function($http, $rootScope) {
         return {
             getres: function(restype, resid, successcb, errorcb) {
@@ -15,6 +15,35 @@ angular.module('starter.services', [])
                     .error(function(data, status) {
                         errorcb(data);
                     });
+            }
+        };
+    })
+    .factory('BdMap', function() {
+        var map = undefined;
+        return {
+            initMap: function(loc, eleid, marks) {
+                map = new BMap.Map(eleid); // 创建Map实例
+                var point = new BMap.Point(loc.longitude, loc.latitude); // 创建点坐标
+                map.centerAndZoom(point, 15); // 初始化地图,设置中心点坐标和地图级别。
+            },
+            addmarkers: function(markers, onlick) {
+                markers.forEach(function(marker) {
+                    var pt = new BMap.Point(marker.longitude, marker.latitude);
+                    var marker2;
+                    if (marker.icon) {
+                        var icon = new BMap.Icon(marker.icon, new BMap.Size(marker.width, marker.height));
+                        marker2 = new BMap.Marker(pt, {
+                            icon: icon
+                        });
+                    } else {
+                        marker2 = new BMap.Marker(pt);
+                    }
+                    // add marker to the map
+                    map.addOverlay(marker2); // 将标注添加到地图中
+                    marker2.addEventListener("click", function() {
+                        onlick(marker);
+                    });
+                });
             }
         };
     })
@@ -37,13 +66,17 @@ angular.module('starter.services', [])
                         cb(curloc);
                     } else {
                         $rootScope.nextrefresh = now + 60;
-                        var geolocation = new BMap.Geolocation(); 
-						geolocation.getCurrentPosition(function(data) {
-								curloc = {
-									latitude: data.point.lat,
-									longitude: data.point.lng
-								};
-								alert(JSON.stringify(curloc));
+                        var geolocation = new BMap.Geolocation();
+                        geolocation.getCurrentPosition(function(data) {
+								/*
+                                curloc = {
+                                    latitude: data.point.lat,
+                                    longitude: data.point.lng
+                                };
+								*/
+
+								curloc = {longitude: 116.287709, latitude: 40.0376};
+                                alert(JSON.stringify(curloc));
                                 cb(curloc);
                                 //update nextrefresh
                                 //next time refresh should be later than 60 second

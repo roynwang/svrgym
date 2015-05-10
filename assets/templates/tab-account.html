@@ -7,12 +7,14 @@
     </ion-nav-bar>
 
     <ion-content>
-        <baidu-map options="mapOptions" style="display: block; height:inherit" points='gymlist'
+	<div id='bdmap' style="display: block; height:inherit" ng-show='mapmode'></div>
+       <!-- <baidu-map options="mapOptions" style="display: block; height:inherit" points='gymlist'
         center='curloc' markerclick='markerclick' ng-show="mapmode"></baidu-map>
+		-->
         <div class="list card card-info" ng-hide="mapmode">
             <div class="item item-avatar" ng-repeat="gym in gymlist" ng-click="markerclickaction(gym)">
                 <h2>{{gym.title}}</h2>
-                <p>{{gym.price}}</p>
+				<p>{{gym.distance}}m</p>
             </div>
         </div>
     </ion-content>
